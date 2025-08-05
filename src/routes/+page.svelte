@@ -1,6 +1,39 @@
 <script>
-     import resume from '$lib/documents/Resume-Web.pdf';
+    import { onMount } from "svelte";
+    import resume from "$lib/documents/Resume-Web.pdf";
+    import Stats from "./components/stats.svelte";
+    import Posts from "$lib/posts/posts.json";
+
+    let latestPost = null;
+    let postId = null;
+    let allPosts = [];
+    let title = "";
+    let postDate = "";
+    let postContent = "";
+
+    onMount(() => {
+        allPosts = Posts.posts;
+        if (allPosts.length > 0) {
+            latestPost = allPosts.reduce((max, item) => (item.postid > max.postid ? item : max));
+            postId = latestPost.postid;
+            title = latestPost.cardTitle;
+            postDate = latestPost.cardDate;
+            postContent = latestPost.cardContent;
+        }
+    });
+
+    function changePost(postId) {
+       
+        let post = allPosts.find(post => post.postid === postId);
+
+         
+         postId = post.postid;
+        title = post.cardTitle;
+        postDate = post.cardDate;
+        postContent = post.cardContent;
+    }
 </script>
+
 <main class="container py-5">
     <section class="text-center mb-5">
         <h1 class="display-4 fw-bold">🧭 Market Ready: Mark Hansen</h1>
@@ -9,7 +42,7 @@
 
         <div class="d-flex justify-content-center flex-wrap gap-2 pt-3">
             <a href="https://www.linkedin.com/in/markahansen/" target="_blank" class="btn btn-primary">Mark's LinkedIn</a>
-            <a class="btn btn-secondary" href="{resume}" target="_blank">Mark's Resume</a>
+            <a class="btn btn-secondary" href={resume} target="_blank">Mark's Resume</a>
         </div>
     </section>
 
@@ -33,9 +66,10 @@
                 <div class="card-body">
                     <h5 class="card-title">📈 Latest Metrics & KPIs</h5>
                     <ul class="list-unstyled">
-                        <li>👀 53 LinkedIn Profile views in past 30 days</li>
-                        <li>📬 4 recruiter conversations</li>
-                        <li>✅ 0 interviews in progress</li>
+                            <li>👀 533 LinkedIn Profile views in past 30 days</li>
+                            <li>👎 18% Application Rejections</li>
+                            <li>✅ 0% Interviews</li>
+                            <li>💬 2 Social Discussions</li>
                     </ul>
                 </div>
             </div>
@@ -44,96 +78,44 @@
     <section class="mb-5">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">📰 Latest Update</h5>
-                <h6 class="card-subtitle mb-2 text-muted">July 20, 2025</h6>
-                <h4 class="mb-3">Building Myself as a Product</h4>
-
-                <p>
-                    After nine years with Accusoft and Docubee, both companies have been acquired and it's time to look forward to the next step in my career. I'm beyond appreciative of the many people I was able to work with and learn from over the last near decade. Accusoft and Docubee were filled with talented, smart, and kind people pushing to make the best products possible. A special thanks
-                    to Jack Berlin and his leadership team who fostered innovation and cultivated talent here in Tampa.
-                </p>
-
-                <p>With that said, I've done a great deal of thinking about how to embark on the job search and find my place in a new organization. Considering the tough job market, what better way to tackle that problem than to apply the years of experience taking new products to market and shift it to something more personal, myself.</p>
-
-                <p>With so many tools at my disposal, it felt like a natural fit to take these lessons and apply them to my job search. What is my product market fit? What KPIs and metrics can I use to track progress? What is my target persona? Do I need a backlog for this? (I do love a nice backlog.)</p>
-
-                <p>
-                    For now, I've started with the basics, applying for roles that are interesting and where I feel I would bring value. Right now I've been tracking basic metrics, submittals, rejections, interviews, dates, etc. The last few weeks have been dealing with a transition to the new organization and the chaos that goes with that. This week I plan to reflect on what is working well and
-                    what isn't and from there start applying what I can from the PM world to the job hunt.
-                </p>
-
-                <p>If you're out there looking or just want to follow along, feel free to add me on LinkedIn if you haven't already, and if you have ideas I would love to hear them as well!</p>
+                <h5 class="card-title">📰 {title}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{postDate}</h6>
+                <p>{@html postContent}</p>
             </div>
         </div>
     </section>
 
-    <section class="mb-5">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">📊 Weekly Job Search Metrics</h5>
-                <div class="table-responsive">
-                    <table class="table table-striped text-center align-middle mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">Week #</th>
-                                <th scope="col">Applications</th>
-                                <th scope="col">Rejections</th>
-                                <th scope="col">Interviews</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Week 1</td>
-                                <td>9</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>Week 2</td>
-                                <td>5</td>
-                                <td>3</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>Week 3</td>
-                                <td>9</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
+    <Stats />
 
     <section class="mb-5">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">📝 Previous Updates</h5>
                 <ul class="list-unstyled">
-                    <li>v2025.1 — You're Reading It!</li>
+                    {#each allPosts as Post}
+                        <li>v{new Date(Post.cardDate).getFullYear()}.{Post.postid} - <a href="javascript:void(0)" on:click={() => changePost(Post.postid)}>{Post.cardTitle}</a></li>
+                    {/each}
                 </ul>
             </div>
         </div>
     </section>
-    <!--        
+
+        <!--
         <section class="mb-5">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">💬 Testimonials</h5>
                     <blockquote class="blockquote">
-                        <p>⭐⭐⭐⭐⭐ “Mark made our product strategy click. His ability to go from vision to execution is unmatched.”</p>
+                        <p>“He is just as eager to jump on a customer call to help sales close a deal as he is to help the engineering team work through a complex feature implementation. ”</p>
                     </blockquote>
                     <blockquote class="blockquote">
-                        <p>⭐⭐⭐⭐⭐ “A calm, focused leader who drives clarity and builds real momentum.”</p>
+                        <p>“I've had the pleasure of working with Mark for close to 8 years, and he's not only a fantastic Product professional but also a truly great person. He'll be an invaluable addition to any organization!”</p>
                     </blockquote>
                 </div>
             </div>
         </section>
-
+-->
         <section class="text-center">
             <p class="text-muted">Looking to build something meaningful? Let's connect.</p>
         </section>
-        -->
 </main>
