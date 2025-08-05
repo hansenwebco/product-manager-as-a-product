@@ -66,9 +66,10 @@
                 <div class="card-body">
                     <h5 class="card-title">📈 Latest Metrics & KPIs</h5>
                     <ul class="list-unstyled">
-                        <li>👀 53 LinkedIn Profile views in past 30 days</li>
-                        <li>📬 4 recruiter conversations</li>
-                        <li>✅ 0 interviews in progress</li>
+                            <li>👀 533 LinkedIn Profile views in past 30 days</li>
+                            <li>👎 18% Application Rejections</li>
+                            <li>✅ 0% Interviews</li>
+                            <li>💬 2 Social Discussions</li>
                     </ul>
                 </div>
             </div>

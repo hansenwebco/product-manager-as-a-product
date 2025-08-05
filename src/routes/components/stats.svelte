@@ -19,7 +19,7 @@
                         <tr>
                             <td>Week 1</td>
                             <td>9</td>
-                            <td>1</td>
+                            <td>3</td>
                             <td>0</td>
                         </tr>
                         <tr>
@@ -30,9 +30,24 @@
                         </tr>
                         <tr>
                             <td>Week 3</td>
-                            <td>9</td>
+                            <td>11</td>
                             <td>0</td>
                             <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Week 4</td>
+                            <td>8</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td>33</td>
+                            <td>6</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Percent Responses (Rejected or Interview) = ~18%</td>
                         </tr>
                     </tbody>
                 </table>
